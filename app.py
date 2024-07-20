@@ -1,4 +1,29 @@
 import streamlit as st
+import subprocess
+import sys
+
+# Function to install a package
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+# List of required packages
+required_packages = [
+    "langchain",
+    "langchain_community",
+    "sentence-transformers",
+    "python-dotenv",
+    "pinecone-client",
+    "huggingface-hub",
+]
+
+# Install required packages if not already installed
+for package in required_packages:
+    try:
+        __import__(package)
+    except ImportError:
+        install(package)
+
+import streamlit as st
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from sentence_transformers import SentenceTransformer
